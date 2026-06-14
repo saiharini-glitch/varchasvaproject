@@ -4,7 +4,7 @@ import pandas as pd
 from collections import deque
 import time
 import os  # Added to safely handle file checking
-from feature_ex import extract_features, compute_fft
+from feature import extract_features, compute_fft
 
 # -----------------------------
 # SERIAL CONNECTION

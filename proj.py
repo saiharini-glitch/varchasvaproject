@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import joblib
 
-from feature_ex import extract_features,compute_fft
+from feature import extract_features,compute_fft
 
 model = joblib.load(
     "sound_seismic_model.pkl"
