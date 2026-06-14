@@ -6,9 +6,9 @@ import time
 import os  # Added to safely handle file checking
 from feature import extract_features, compute_fft
 
-# -----------------------------
+
 # SERIAL CONNECTION
-# -----------------------------
+
 try:
     ser = serial.Serial('COM8', 115200, timeout=1)
     time.sleep(2)
@@ -17,9 +17,9 @@ except Exception as e:
     print(f"Error connecting to Serial Port: {e}")
     exit()
 
-# -----------------------------
+
 # SETTINGS
-# -----------------------------
+
 window_size = 256
 sampling_rate = 10  # 10 samples per second
 
@@ -28,9 +28,9 @@ sound_buffer = deque(maxlen=window_size)
 
 dataset = []
 
-# -----------------------------
+
 # MAIN DATA COLLECTION
-# -----------------------------
+
 print("\nEnter class name (walking, digging, vehicle, noise):")
 label = input("Class: ")
 
@@ -78,9 +78,9 @@ while count < samples_needed:
             count += 1
             print(f"Sample Collected: {count} / {samples_needed}")
 
-# -----------------------------
+
 # SAVE CSV (STRICT APPEND MODE)
-# -----------------------------
+
 columns = [
     "seismic_low_energy", "seismic_mid_energy", "seismic_high_energy", "seismic_peak_freq",
     "seismic_rms", "seismic_centroid", "seismic_variance", "seismic_zcr", "seismic_peak_count", "seismic_kurtosis",

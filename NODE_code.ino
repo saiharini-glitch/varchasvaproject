@@ -9,7 +9,7 @@
 
 #define NODE_ID 1
 
-// --- MPU6050 Pin & Address Registration ---
+//  MPU6050 Pin & Address Registration 
 #define MPU_SDA 8
 #define MPU_SCL 9
 const uint8_t MPU_ADDR = 0x68;
@@ -17,7 +17,7 @@ const uint8_t MPU_ADDR = 0x68;
 int16_t ax, ay, az;
 float seismicFilter = 0;
 
-// --- INMP441 Microphone I2S Configuration Pins ---
+//  INMP441 Microphone I2S Configuration Pins 
 #define I2S_WS   4
 #define I2S_SD   6
 #define I2S_SCK  7
@@ -25,7 +25,7 @@ float seismicFilter = 0;
 
 float soundFilter = 0;
 
-// --- SX1278 LoRa Transceiver Pin Mapping ---
+//  SX1278 LoRa Transceiver Pin Mapping 
 #define LORA_SS    10
 #define LORA_RST   17
 #define LORA_DIO0  16
@@ -33,7 +33,7 @@ float soundFilter = 0;
 #define SPI_MISO   13
 #define SPI_MOSI   11
 
-// --- Instantiating the Eloquent ML Random Forest Classifier ---
+//  Instantiating the Eloquent ML Random Forest Classifier 
 // Corrected a typo from the provided snippet (Eloqent -> Eloquent)
 Eloquent::ML::Port::RandomForest classifier;
 
@@ -43,9 +43,9 @@ float features[20] = {0.0};
 // Timing tracking variable for 1-second transmission loops
 unsigned long lastTxTime = 0;
 
-// =====================================================
+
 // HARDWARE INITIALIZATION SUBSYSTEMS
-// =====================================================
+
 
 void setupI2SMic() {
   i2s_config_t i2s_config = {
@@ -81,9 +81,9 @@ void setupMPU() {
   Wire.endTransmission(true);
 }
 
-// =====================================================
+
 // REAL-TIME HARDWARE SAMPLING PIPELINES
-// =====================================================
+
 
 int readSeismic() {
   Wire.beginTransmission(MPU_ADDR);
@@ -149,9 +149,9 @@ int readMicLevel() {
   return constrain(level, 0, 1000);
 }
 
-// =====================================================
+
 // FEATURE EXTRACTOR FOR RANDOM FOREST INPUT
-// =====================================================
+
 void populateClassifierFeatures(int currentSeismic, int currentSound) {
   // Linearly scale and normalize your actual physical attributes into the 
   // 20 floating-point slots expected by your specific RandomForest structure.
@@ -179,9 +179,9 @@ String getAIVerdictLabel(int classId) {
   }
 }
 
-// =====================================================
+
 // MAIN ARDUINO SYSTEM CORE ARCHITECTURE
-// =====================================================
+
 
 void setup() {
   Serial.begin(115200);
@@ -222,7 +222,7 @@ void loop() {
     int finalClassId = 1; // Default layout fallback to class index 1
     String aiVerdictString = "";
 
-    // --- STRUCTURAL HARDWARE NOISE GATE OVERRIDE ---
+    //  STRUCTURAL HARDWARE NOISE GATE OVERRIDE 
     // If the actual filtered sensor readings remain under resting threshold,
     // lock prediction to NOMINAL to bypass erratic tree votes from random electronic noise.
     if (seismic <= 120 && sound <= 70) {
@@ -242,7 +242,7 @@ void loop() {
       Serial.println(finalClassId);
     }
 
-    // --- PRODUCTION-READY COMMA-DELIMITED PAYLOAD GENERATION ---
+    //  PRODUCTION-READY COMMA-DELIMITED PAYLOAD GENERATION 
     String payload = "NODE:" + String(NODE_ID) + 
                      ",SEISMIC:" + String(seismic) + 
                      ",SOUND:" + String(sound) + 

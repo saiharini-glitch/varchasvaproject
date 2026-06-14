@@ -1,15 +1,4 @@
-/*
-=====================================================================
-VARCHASVA SYSTEM ENGINE - CENTRAL BASE STATION GATEWAY V3.1
-Target Hardware: ESP32-S3 N16R8
-Modifications:
-- Corrected advanced tokenized substring parsing to handle comma-delimited packets
-- Seamless matching with Edge-AI string formatting from remote nodes
-- Integrated GPIO 4 for Direct Active Buzzer Audio Alerts
-- Added non-blocking asynchronous timing window handler
-- Kept all original web templates and mesh architecture intact
-=====================================================================
-*/
+
 
 #include <SPI.h>
 #include <LoRa.h>
@@ -17,13 +6,13 @@ Modifications:
 #include <WebServer.h>
 #include <ArduinoJson.h>
 
-// --- Access Point Configuration ---
+//  Access Point Configuration
 const char* ap_ssid     = "S3_Seismic_Gateway";
 const char* ap_password = "engineering123";
 
 WebServer server(80);
 
-// --- SX1278 Gateway Pin Map (ESP32-S3 GPIOs) ---
+//  SX1278 Gateway Pin Map (ESP32-S3 GPIOs) 
 #define LORA_SS    10
 #define LORA_RST   17
 #define LORA_DIO0  16
@@ -31,7 +20,7 @@ WebServer server(80);
 #define SPI_MISO   13
 #define SPI_MOSI   11
 
-// --- Hardware Audio Alert Pin ---
+//  Hardware Audio Alert Pin 
 #define BUZZER_PIN  4  // Long leg to GPIO 4, Short leg to GND
 
 const int MAX_NODES = 10;
@@ -92,7 +81,7 @@ void verifyNodeHeartbeats() {
   }
 }
 
-// --- HTTP SERVER HANDLER: MAIN DASHBOARD V3.1 ---
+//  HTTP SERVER HANDLER: MAIN DASHBOARD V3.1 
 void handleRoot() {
   String html = "<!DOCTYPE html><html><head>";
   html += "<meta charset='UTF-8'>"; 
@@ -316,7 +305,7 @@ void handleRoot() {
   server.send(200, "text/html", html);
 }
 
-// --- TELEMETRY JSON DATA REPLICATOR ENDPOINT (THREAD SAFE) ---
+//  TELEMETRY JSON DATA REPLICATOR ENDPOINT (THREAD SAFE) 
 void handleDataJson() {
   if (processingNetworkData) {
     server.send(503, "text/plain", "Service Busy");
@@ -339,7 +328,7 @@ void handleDataJson() {
   server.send(200, "application/json", jsonStr);
 }
 
-// --- CORES INITIALIZATION ---
+//  CORES INITIALIZATION 
 void setup() {
   Serial.begin(115200);
   delay(1000);
@@ -365,7 +354,7 @@ void setup() {
   Serial.println("[SUCCESS] LoRa Mesh Core Active & Awaiting Nodes...");
 }
 
-// --- CENTRAL CONCURRENT PROCESSING LOOP ---
+//  CENTRAL CONCURRENT PROCESSING LOOP 
 void loop() {
   server.handleClient();
   verifyNodeHeartbeats();
@@ -382,7 +371,7 @@ void loop() {
     Serial.print("[LORA RX] Raw Packet Received: ");
     Serial.println(packetStr);
 
-    // --- STRIP COMMAS AND PARSE SUBSTRINGS SAFELY ---
+    //  STRIP COMMAS AND PARSE SUBSTRINGS SAFELY 
     // Target Format: NODE:1,SEISMIC:450,SOUND:120,AI_CLASS:DRILLING_TUNNELING,CLASS_ID:2
     int nodeIdx    = packetStr.indexOf("NODE:");
     int seismicIdx = packetStr.indexOf(",SEISMIC:");
