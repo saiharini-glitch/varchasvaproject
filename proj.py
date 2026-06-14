@@ -51,9 +51,7 @@ while True:
         sound = int(values[2])
         seismic_buffer.append(seismic)
         sound_buffer.append(sound)
-        # -------------------------
-        # WINDOW READY?
-        # -------------------------
+        
 
         if len(seismic_buffer) == window_size and len(sound_buffer) == window_size:
 

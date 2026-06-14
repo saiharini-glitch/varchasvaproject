@@ -37,16 +37,16 @@ def extract_features(signal, freqs, mag):
 
     
 
-    # ----------------------------
+    
     # Frequency band splitting
-    # ----------------------------
+ 
     low_band = mag[0:int(0.1 * N)]
     mid_band = mag[int(0.1 * N):int(0.5 * N)]
     high_band = mag[int(0.5 * N):]
 
-    # ----------------------------
+  
     # Core features
-    # ----------------------------
+ 
 
     # Energy in each band
     low_energy = np.sum(low_band)
@@ -115,9 +115,7 @@ def extract_features(signal, freqs, mag):
     )
 
 
-    # ----------------------------
     # Final feature vector
-    # ----------------------------
     features = [
         low_energy,
         mid_energy,
