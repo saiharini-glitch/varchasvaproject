@@ -6,13 +6,13 @@
 #include <WebServer.h>
 #include <ArduinoJson.h>
 
-//  Access Point Configuration
+
 const char* ap_ssid     = "S3_Seismic_Gateway";
 const char* ap_password = "engineering123";
 
 WebServer server(80);
 
-//  SX1278 Gateway Pin Map (ESP32-S3 GPIOs) 
+ 
 #define LORA_SS    10
 #define LORA_RST   17
 #define LORA_DIO0  16
@@ -20,8 +20,8 @@ WebServer server(80);
 #define SPI_MISO   13
 #define SPI_MOSI   11
 
-//  Hardware Audio Alert Pin 
-#define BUZZER_PIN  4  // Long leg to GPIO 4, Short leg to GND
+ 
+#define BUZZER_PIN  4  
 
 const int MAX_NODES = 10;
 const unsigned long NODE_TIMEOUT = 15000; 
@@ -38,11 +38,11 @@ struct TelemetryNode {
 TelemetryNode networkMesh[MAX_NODES];
 volatile bool processingNetworkData = false;
 
-// Variables to handle non-blocking buzzer alert timing
+//variables to handle non-blocking buzzer alert timing
 unsigned long buzzerEndTime = 0;
 bool buzzerActive = false;
 
-// Helper functions for non-blocking active buzzer behavior
+//helper functions for non-blocking active buzzer behavior
 void triggerAudioAlert() {
   digitalWrite(BUZZER_PIN, HIGH);
   buzzerEndTime = millis() + 300; // Buzz sharply for 300 milliseconds
@@ -81,7 +81,7 @@ void verifyNodeHeartbeats() {
   }
 }
 
-//  HTTP SERVER HANDLER: MAIN DASHBOARD V3.1 
+//HTTP S: MAIN DASHBOARD V3.1 
 void handleRoot() {
   String html = "<!DOCTYPE html><html><head>";
   html += "<meta charset='UTF-8'>"; 
@@ -305,7 +305,7 @@ void handleRoot() {
   server.send(200, "text/html", html);
 }
 
-//  TELEMETRY JSON DATA REPLICATOR ENDPOINT (THREAD SAFE) 
+//  TELEMETRY JSON DATA REPLICATOR ENDPOINT 
 void handleDataJson() {
   if (processingNetworkData) {
     server.send(503, "text/plain", "Service Busy");
@@ -333,7 +333,7 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
 
-  // Initialize hardware pin as output and set it low out of the gate
+  
   pinMode(BUZZER_PIN, OUTPUT);
   digitalWrite(BUZZER_PIN, LOW);
 
@@ -354,11 +354,11 @@ void setup() {
   Serial.println("[SUCCESS] LoRa Mesh Core Active & Awaiting Nodes...");
 }
 
-//  CENTRAL CONCURRENT PROCESSING LOOP 
+
 void loop() {
   server.handleClient();
   verifyNodeHeartbeats();
-  checkBuzzerTimeout(); // Continuously monitor non-blocking active buzzer duration
+  checkBuzzerTimeout(); 
 
   int packetSize = LoRa.parsePacket();
   if (packetSize) {

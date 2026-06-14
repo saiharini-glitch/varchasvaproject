@@ -5,7 +5,7 @@
 #include <LoRa.h>
 #include <driver/i2s.h>
 #include <math.h>
-#include "model.h"  // Ensure model.h is in your project sketch folder
+#include "model.h"  
 
 #define NODE_ID 1
 
@@ -33,14 +33,14 @@ float soundFilter = 0;
 #define SPI_MISO   13
 #define SPI_MOSI   11
 
-//  Instantiating the Eloquent ML Random Forest Classifier 
-// Corrected a typo from the provided snippet (Eloqent -> Eloquent)
+
+
 Eloquent::ML::Port::RandomForest classifier;
 
-// Features vector used to feed your model.h predict function
+
 float features[20] = {0.0};
 
-// Timing tracking variable for 1-second transmission loops
+
 unsigned long lastTxTime = 0;
 
 
