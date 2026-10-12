@@ -86,7 +86,6 @@ with open(
 
 print("C++ model exported")
 
-# --- COPY AND PASTE THIS FIXED BLOCK AT THE BOTTOM OF YOUR PYTHON SCRIPT ---
 print("\n--- COPY THESE INTO ARDUINO ---")
 all_means = list(scaler.mean_)
 all_stds = list(scaler.scale_)
